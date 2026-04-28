@@ -1,12 +1,394 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# TaskFlow Pro - Backend API
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+A production-ready task management system API built with NestJS, PostgreSQL, and Prisma ORM.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
+## 🚀 Features
+
+- ✅ **JWT Authentication** - Secure token-based authentication
+- ✅ **Role-Based Access Control** - ADMIN, PROJECT_MANAGER, DEVELOPER roles
+- ✅ **Modular Architecture** - Clean, scalable, and maintainable code
+- ✅ **RESTful API** - Well-structured endpoints with versioning
+- ✅ **Database** - PostgreSQL with Prisma ORM
+- ✅ **Validation** - DTOs with class-validator and class-transformer
+- ✅ **Error Handling** - Comprehensive exception handling with standardized responses
+- ✅ **Swagger Documentation** - Auto-generated API documentation
+- ✅ **Docker Support** - Production-ready Dockerfile and docker-compose
+- ✅ **Seed Data** - Pre-populated database with test users and projects
+
+## 📋 Tech Stack
+
+- **Runtime**: Node.js 22 (Alpine)
+- **Framework**: NestJS 11
+- **Language**: TypeScript 5
+- **Database**: PostgreSQL 17
+- **ORM**: Prisma 6
+- **Authentication**: JWT + Passport
+- **Validation**: class-validator, class-transformer
+- **Password Hashing**: bcrypt
+- **API Documentation**: Swagger/OpenAPI
+- **Container**: Docker & Docker Compose
+
+## 📁 Project Structure
+
+```
+backend/
+├── prisma/
+│   ├── schema.prisma        # Database schema
+│   └── seed.ts              # Seed script
+├── src/
+│   ├── modules/
+│   │   ├── auth/            # Authentication module
+│   │   │   ├── dto/
+│   │   │   ├── strategies/
+│   │   │   ├── auth.controller.ts
+│   │   │   ├── auth.service.ts
+│   │   │   └── auth.module.ts
+│   │   ├── users/           # Users management module
+│   │   ├── projects/        # Projects module
+│   │   └── tasks/           # Tasks module
+│   ├── common/
+│   │   ├── guards/          # JWT & Roles guards
+│   │   ├── decorators/      # Custom decorators
+│   │   ├── filters/         # Exception filters
+│   │   └── interceptors/    # Response interceptors
+│   ├── config/              # Configuration files
+│   ├── services/            # Shared services (Prisma)
+│   ├── app.module.ts
+│   └── main.ts
+├── test/                    # E2E tests
+├── Dockerfile               # Production Docker image
+├── docker-compose.yml       # Production setup
+├── docker-compose.dev.yml   # Development setup
+├── .env                     # Environment variables
+├── .env.example             # Environment template
+├── package.json
+└── tsconfig.json
+```
+
+## 🔐 API Endpoints
+
+### Authentication
+- `POST /api/v1/auth/register` - Register new user
+- `POST /api/v1/auth/login` - Login user
+
+### Users (Admin only)
+- `POST /api/v1/users` - Create user
+- `GET /api/v1/users` - Get all users (paginated)
+- `GET /api/v1/users/:id` - Get user by ID
+- `PATCH /api/v1/users/:id` - Update user
+- `DELETE /api/v1/users/:id` - Delete user
+
+### Projects
+- `POST /api/v1/projects` - Create project (ADMIN, PROJECT_MANAGER)
+- `GET /api/v1/projects` - Get all projects
+- `GET /api/v1/projects/:id` - Get project by ID
+- `PATCH /api/v1/projects/:id` - Update project (owner or admin)
+- `DELETE /api/v1/projects/:id` - Delete project (owner or admin)
+
+### Tasks
+- `POST /api/v1/tasks` - Create task
+- `GET /api/v1/tasks` - Get all tasks with filtering
+- `GET /api/v1/tasks/project/:projectId` - Get tasks by project
+- `GET /api/v1/tasks/:id` - Get task by ID
+- `PATCH /api/v1/tasks/:id` - Update task
+- `DELETE /api/v1/tasks/:id` - Delete task
+
+## 🔑 User Roles
+
+### ADMIN
+- Manage all users
+- View all projects and tasks
+- Full system access
+
+### PROJECT_MANAGER
+- Create projects
+- Manage own projects and tasks
+- Assign tasks to developers
+
+### DEVELOPER
+- View assigned tasks
+- Update own tasks
+- View projects they're assigned to
+
+## 📊 Database Schema
+
+### User
+- `id` - Unique identifier
+- `email` - Unique email address
+- `name` - User name
+- `password` - Hashed password
+- `role` - User role (ADMIN, PROJECT_MANAGER, DEVELOPER)
+- `avatarUrl` - Avatar URL (optional)
+- `createdAt` - Creation timestamp
+- `updatedAt` - Last update timestamp
+
+### Project
+- `id` - Unique identifier
+- `name` - Project name
+- `description` - Project description
+- `status` - Status (ACTIVE, ARCHIVED)
+- `ownerId` - Owner user ID
+- `createdAt` - Creation timestamp
+- `updatedAt` - Last update timestamp
+
+### Task
+- `id` - Unique identifier
+- `title` - Task title
+- `description` - Task description
+- `status` - Status (TODO, IN_PROGRESS, IN_REVIEW, DONE)
+- `priority` - Priority (LOW, MEDIUM, HIGH, CRITICAL)
+- `projectId` - Associated project ID
+- `assignedToId` - Assigned user ID (optional)
+- `createdById` - Creator user ID
+- `dueDate` - Due date (optional)
+- `createdAt` - Creation timestamp
+- `updatedAt` - Last update timestamp
+
+## 🚀 Getting Started
+
+### Prerequisites
+- Node.js 22+
+- pnpm 10+
+- PostgreSQL 17+ (or Docker)
+- Git
+
+### Installation
+
+1. **Clone the repository**
+```bash
+git clone <repository-url>
+cd backend
+```
+
+2. **Install dependencies**
+```bash
+pnpm install
+```
+
+3. **Set up environment variables**
+```bash
+cp .env.example .env
+# Edit .env with your configuration
+```
+
+4. **Set up PostgreSQL database** (Option A: Local)
+```bash
+# Ensure PostgreSQL is running
+# Update DATABASE_URL in .env
+
+# Run migrations
+pnpm prisma migrate dev
+
+# Seed database
+pnpm prisma:seed
+```
+
+**Option B: Docker**
+```bash
+docker-compose -f docker-compose.dev.yml up -d
+pnpm prisma migrate dev
+pnpm prisma:seed
+```
+
+5. **Run the application**
+```bash
+# Development
+pnpm start:dev
+
+# Production build
+pnpm build
+pnpm start:prod
+```
+
+### Application URLs
+- **API**: http://localhost:3000
+- **Swagger Docs**: http://localhost:3000/api/docs
+
+### Test Credentials
+```
+Admin:
+  Email: admin@taskflow.com
+  Password: admin123
+
+Project Manager:
+  Email: pm@taskflow.com
+  Password: pm123
+
+Developer:
+  Email: dev@taskflow.com
+  Password: dev123
+```
+
+## 🐳 Docker Deployment
+
+### Quick Start
+```bash
+docker-compose up --build
+```
+
+This will:
+1. Build the NestJS application
+2. Start PostgreSQL database
+3. Run database migrations
+4. Start the backend server
+
+### Development with Docker
+```bash
+# Start only PostgreSQL
+docker-compose -f docker-compose.dev.yml up -d
+
+# Run migrations and seed locally
+pnpm prisma migrate dev
+pnpm prisma:seed
+
+# Start development server
+pnpm start:dev
+```
+
+### Environment Variables
+Create a `.env` file with:
+```env
+DATABASE_URL=postgresql://taskflow:taskflow123@postgres:5432/taskflow_db
+JWT_SECRET=your-strong-secret-key
+JWT_EXPIRATION=3600
+PORT=3000
+NODE_ENV=production
+API_BASE_URL=http://localhost:3000
+```
+
+## 📚 API Response Format
+
+### Success Response
+```json
+{
+  "success": true,
+  "data": {
+    // Response data
+  },
+  "message": "Operation successful"
+}
+```
+
+### Error Response
+```json
+{
+  "success": false,
+  "message": "Error message",
+  "errors": {
+    "field": ["error detail"]
+  },
+  "statusCode": 400
+}
+```
+
+## 🧪 Testing
+
+```bash
+# Unit tests
+pnpm test
+
+# Watch mode
+pnpm test:watch
+
+# Coverage
+pnpm test:cov
+
+# E2E tests
+pnpm test:e2e
+```
+
+## 📝 Common Tasks
+
+### Add a new migration
+```bash
+pnpm prisma migrate dev --name migration_name
+```
+
+### View database in Prisma Studio
+```bash
+pnpm prisma studio
+```
+
+### Reset database (development only)
+```bash
+pnpm prisma migrate reset
+```
+
+### Format code
+```bash
+pnpm format
+```
+
+### Lint code
+```bash
+pnpm lint
+```
+
+## 🔒 Security Best Practices
+
+1. **Environment Variables**: Never commit `.env` to version control
+2. **JWT Secret**: Use a strong, random secret in production
+3. **Password Hashing**: Passwords are hashed using bcrypt with 10 salt rounds
+4. **CORS**: Configure CORS for specific frontend domains
+5. **Validation**: All inputs are validated using class-validator
+6. **Rate Limiting**: Consider implementing rate limiting for production
+7. **HTTPS**: Use HTTPS in production
+8. **Database**: Use strong database passwords and encrypted connections
+
+## 🚀 Production Deployment
+
+1. **Environment Setup**
+   ```bash
+   # Use strong secrets
+   JWT_SECRET=$(openssl rand -hex 32)
+   ```
+
+2. **Build Docker Image**
+   ```bash
+   docker build -t taskflow-backend:latest .
+   ```
+
+3. **Push to Registry**
+   ```bash
+   docker tag taskflow-backend:latest your-registry/taskflow-backend:latest
+   docker push your-registry/taskflow-backend:latest
+   ```
+
+4. **Deploy with Compose** or Kubernetes/ECS
+
+5. **Health Checks**
+   - Backend: `GET /api/docs` (check if Swagger loads)
+   - Database: Health check endpoint in docker-compose
+
+## 📖 Swagger Documentation
+
+Full API documentation is available at `/api/docs` when the application is running.
+
+Features:
+- All endpoints documented
+- Request/response schemas
+- Authentication setup
+- Try-it-out functionality
+
+## 🤝 Contributing
+
+1. Follow SOLID principles
+2. Keep controllers thin, business logic in services
+3. Use meaningful commit messages
+4. Write tests for new features
+5. Maintain clean code with proper linting
+
+## 📄 License
+
+UNLICENSED
+
+## 📞 Support
+
+For issues and questions, please create an issue in the repository.
+
+---
+
+**Happy coding! 🎉**
 <a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
 <a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
 <a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
