@@ -2,7 +2,7 @@
 
 A production-ready task management system API built with NestJS, PostgreSQL, and Prisma ORM.
 
-## 🚀 Features
+## 🚀 Caracteristicas
 
 - ✅ **JWT Authentication** - Secure token-based authentication
 - ✅ **Role-Based Access Control** - ADMIN, PROJECT_MANAGER, DEVELOPER roles
@@ -15,7 +15,7 @@ A production-ready task management system API built with NestJS, PostgreSQL, and
 - ✅ **Docker Support** - Production-ready Dockerfile and docker-compose
 - ✅ **Seed Data** - Pre-populated database with test users and projects
 
-## 📋 Tech Stack
+## 📋 Stack Tecnológico
 
 - **Runtime**: Node.js 22 (Alpine)
 - **Framework**: NestJS 11
@@ -28,41 +28,99 @@ A production-ready task management system API built with NestJS, PostgreSQL, and
 - **API Documentation**: Swagger/OpenAPI
 - **Container**: Docker & Docker Compose
 
-## 📁 Project Structure
+## 📁 Estructura de la API
 
 ```
-backend/
-├── prisma/
-│   ├── schema.prisma        # Database schema
-│   └── seed.ts              # Seed script
-├── src/
-│   ├── modules/
-│   │   ├── auth/            # Authentication module
-│   │   │   ├── dto/
-│   │   │   ├── strategies/
-│   │   │   ├── auth.controller.ts
-│   │   │   ├── auth.service.ts
-│   │   │   └── auth.module.ts
-│   │   ├── users/           # Users management module
-│   │   ├── projects/        # Projects module
-│   │   └── tasks/           # Tasks module
-│   ├── common/
-│   │   ├── guards/          # JWT & Roles guards
-│   │   ├── decorators/      # Custom decorators
-│   │   ├── filters/         # Exception filters
-│   │   └── interceptors/    # Response interceptors
-│   ├── config/              # Configuration files
-│   ├── services/            # Shared services (Prisma)
-│   ├── app.module.ts
-│   └── main.ts
-├── test/                    # E2E tests
-├── Dockerfile               # Production Docker image
-├── docker-compose.yml       # Production setup
-├── docker-compose.dev.yml   # Development setup
-├── .env                     # Environment variables
-├── .env.example             # Environment template
-├── package.json
-└── tsconfig.json
+└── 📁backend
+    └── 📁prisma
+        └── 📁migrations
+            └── 📁20260427195207_init
+                ├── migration.sql
+            ├── migration_lock.toml
+        ├── schema.prisma
+    └── 📁src
+        └── 📁common
+            └── 📁decorators
+                ├── roles.decorator.ts
+            └── 📁filters
+                ├── all-exceptions.filter.ts
+            └── 📁guards
+                ├── auth.guard.ts
+                ├── roles.guard.ts
+            └── 📁interceptors
+                ├── response.interceptor.ts
+        └── 📁config
+            ├── envs.ts
+        └── 📁generated
+            └── 📁prisma
+                └── 📁internal
+                    ├── class.ts
+                    ├── prismaNamespace.ts
+                    ├── prismaNamespaceBrowser.ts
+                └── 📁models
+                    ├── Project.ts
+                    ├── Task.ts
+                    ├── User.ts
+                ├── browser.ts
+                ├── client.ts
+                ├── commonInputTypes.ts
+                ├── enums.ts
+                ├── models.ts
+        └── 📁modules
+            └── 📁auth
+                └── 📁dto
+                    ├── auth.dto.ts
+                └── 📁strategies
+                    ├── jwt.strategy.ts
+                ├── auth.controller.ts
+                ├── auth.module.ts
+                ├── auth.service.ts
+            └── 📁projects
+                └── 📁dto
+                    ├── project.dto.ts
+                ├── projects.controller.ts
+                ├── projects.module.ts
+                ├── projects.service.ts
+            └── 📁seed
+                └── 📁data
+                    ├── data.seed.ts
+                ├── seed.controller.ts
+                ├── seed.module.ts
+                ├── seed.service.ts
+            └── 📁tasks
+                └── 📁dto
+                    ├── task.dto.ts
+                ├── tasks.controller.ts
+                ├── tasks.module.ts
+                ├── tasks.service.ts
+            └── 📁users
+                └── 📁dto
+                    ├── user.dto.ts
+                ├── users.controller.ts
+                ├── users.module.ts
+                ├── users.service.ts
+        ├── app.controller.spec.ts
+        ├── app.controller.ts
+        ├── app.module.ts
+        ├── app.service.ts
+        ├── main.ts
+        ├── prisma.service.ts
+    └── 📁test
+        ├── app.e2e-spec.ts
+        ├── jest-e2e.json
+    ├── .env
+    ├── .env.example
+    ├── .gitignore
+    ├── .prettierrc
+    ├── docker-compose.yaml
+    ├── eslint.config.mjs
+    ├── nest-cli.json
+    ├── package.json
+    ├── pnpm-lock.yaml
+    ├── prisma.config.ts
+    ├── README.md
+    ├── tsconfig.build.json
+    └── tsconfig.json
 ```
 
 ## 🔐 API Endpoints
@@ -93,22 +151,22 @@ backend/
 - `PATCH /api/v1/tasks/:id` - Update task
 - `DELETE /api/v1/tasks/:id` - Delete task
 
-## 🔑 User Roles
+## 🔑 Roles
 
 ### ADMIN
-- Manage all users
-- View all projects and tasks
-- Full system access
+- Gestionar todos los usuarios
+- Ver todos los proyectos y tareas
+- Acceso completo al sistema
 
 ### PROJECT_MANAGER
-- Create projects
-- Manage own projects and tasks
-- Assign tasks to developers
+- Crear proyectos
+- Gestionar proyectos y tareas propias
+- Asignar tareas a desarrolladores
 
 ### DEVELOPER
-- View assigned tasks
-- Update own tasks
-- View projects they're assigned to
+- Ver las tareas asignadas
+- Actualizar las propias tareas
+- Ver los proyectos a los que están asignadas
 
 ## 📊 Database Schema
 
