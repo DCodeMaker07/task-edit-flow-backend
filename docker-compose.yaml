@@ -1,0 +1,12 @@
+services:
+  employees-db:
+    container_name: taskflow_db
+    image: postgres:17.7
+    volumes:
+      - ./postgres:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=123456
+      - POSTGRES_DB=taskflow_db
