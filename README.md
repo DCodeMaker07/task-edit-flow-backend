@@ -2,7 +2,7 @@
 
 A production-ready task management system API built with NestJS, PostgreSQL, and Prisma ORM.
 
-## 🚀 Caracteristicas
+## Caracteristicas
 
 - ✅ **JWT Authentication** - Secure token-based authentication
 - ✅ **Role-Based Access Control** - ADMIN, PROJECT_MANAGER, DEVELOPER roles
@@ -15,7 +15,7 @@ A production-ready task management system API built with NestJS, PostgreSQL, and
 - ✅ **Docker Support** - Production-ready Dockerfile and docker-compose
 - ✅ **Seed Data** - Pre-populated database with test users and projects
 
-## 📋 Stack Tecnológico
+## Stack Tecnológico
 
 - **Runtime**: Node.js 22 (Alpine)
 - **Framework**: NestJS 11
@@ -123,7 +123,7 @@ A production-ready task management system API built with NestJS, PostgreSQL, and
     └── tsconfig.json
 ```
 
-## 🔐 API Endpoints
+## API Endpoints
 
 ### Authentication
 - `POST /api/v1/auth/register` - Register new user
@@ -168,7 +168,7 @@ A production-ready task management system API built with NestJS, PostgreSQL, and
 - Actualizar las propias tareas
 - Ver los proyectos a los que están asignadas
 
-## 📊 Database Schema
+## Esquema de base de datos
 
 ### User
 - `id` - Unique identifier
@@ -202,23 +202,23 @@ A production-ready task management system API built with NestJS, PostgreSQL, and
 - `createdAt` - Creation timestamp
 - `updatedAt` - Last update timestamp
 
-## 🚀 Getting Started
+## Instalación
 
-### Prerequisites
+### requisitos
 - Node.js 22+
 - pnpm 10+
 - PostgreSQL 17+ (or Docker)
 - Git
 
-### Installation
+### Pasos de instalación
 
-1. **Clone the repository**
+1. **Clonar repositorio**
 ```bash
 git clone <repository-url>
 cd backend
 ```
 
-2. **Install dependencies**
+2. **Instalación de dependencias con pnpm**
 ```bash
 pnpm install
 ```
@@ -226,43 +226,41 @@ pnpm install
 3. **Set up environment variables**
 ```bash
 cp .env.example .env
-# Edit .env with your configuration
+# Actualizar con su variables de entorno
 ```
 
-4. **Set up PostgreSQL database** (Option A: Local)
+4. **Levantar base de datos: PostgreSQL** (Option A: Local)
 ```bash
-# Ensure PostgreSQL is running
-# Update DATABASE_URL in .env
+# Asegurate que tu postgreSQL este corriendo
+# Actualiza el valor de DATABASE_URL en .env
 
 # Run migrations
 pnpm prisma migrate dev
 
-# Seed database
-pnpm prisma:seed
 ```
 
-**Option B: Docker**
+**Option B: Usando Docker**
 ```bash
 docker-compose -f docker-compose.dev.yml up -d
 pnpm prisma migrate dev
 pnpm prisma:seed
 ```
 
-5. **Run the application**
+5. **Corre la API**
 ```bash
-# Development
+# Desarrollo
 pnpm start:dev
 
-# Production build
+# Construir a producción
 pnpm build
 pnpm start:prod
 ```
 
-### Application URLs
+### URLs de la API
 - **API**: http://localhost:3000
 - **Swagger Docs**: http://localhost:3000/api/docs
 
-### Test Credentials
+### Credenciales temporales
 ```
 Admin:
   Email: admin@taskflow.com
@@ -277,57 +275,20 @@ Developer:
   Password: dev123
 ```
 
-## 🐳 Docker Deployment
+## 📚 API formato de respuesta
 
-### Quick Start
-```bash
-docker-compose up --build
-```
-
-This will:
-1. Build the NestJS application
-2. Start PostgreSQL database
-3. Run database migrations
-4. Start the backend server
-
-### Development with Docker
-```bash
-# Start only PostgreSQL
-docker-compose -f docker-compose.dev.yml up -d
-
-# Run migrations and seed locally
-pnpm prisma migrate dev
-pnpm prisma:seed
-
-# Start development server
-pnpm start:dev
-```
-
-### Environment Variables
-Create a `.env` file with:
-```env
-DATABASE_URL=postgresql://taskflow:taskflow123@postgres:5432/taskflow_db
-JWT_SECRET=your-strong-secret-key
-JWT_EXPIRATION=3600
-PORT=3000
-NODE_ENV=production
-API_BASE_URL=http://localhost:3000
-```
-
-## 📚 API Response Format
-
-### Success Response
+### Respuesta satisfactoria
 ```json
 {
   "success": true,
   "data": {
-    // Response data
+    // Respuesta
   },
   "message": "Operation successful"
 }
 ```
 
-### Error Response
+### Respuesta erronea
 ```json
 {
   "success": false,
@@ -339,40 +300,40 @@ API_BASE_URL=http://localhost:3000
 }
 ```
 
-## 🧪 Testing
+## Pruebas
 
 ```bash
-# Unit tests
+# Unitarios
 pnpm test
 
-# Watch mode
+# Revisión
 pnpm test:watch
 
-# Coverage
+# Cobertura
 pnpm test:cov
 
-# E2E tests
+# E2E
 pnpm test:e2e
 ```
 
-## 📝 Common Tasks
+## 📝 Tareas comunes
 
-### Add a new migration
+### Añadir nueva integración usando PrismaORM
 ```bash
 pnpm prisma migrate dev --name migration_name
 ```
 
-### View database in Prisma Studio
+### Ver base de datos en prisma
 ```bash
 pnpm prisma studio
 ```
 
-### Reset database (development only)
+### Reiniciar base de datos (Desarrollo)
 ```bash
 pnpm prisma migrate reset
 ```
 
-### Format code
+### Formatear código
 ```bash
 pnpm format
 ```
@@ -382,157 +343,23 @@ pnpm format
 pnpm lint
 ```
 
-## 🔒 Security Best Practices
+## Mejores practicas de seguridad
 
-1. **Environment Variables**: Never commit `.env` to version control
-2. **JWT Secret**: Use a strong, random secret in production
-3. **Password Hashing**: Passwords are hashed using bcrypt with 10 salt rounds
-4. **CORS**: Configure CORS for specific frontend domains
-5. **Validation**: All inputs are validated using class-validator
-6. **Rate Limiting**: Consider implementing rate limiting for production
-7. **HTTPS**: Use HTTPS in production
-8. **Database**: Use strong database passwords and encrypted connections
+1. **Variables de entorno**: Nunca incluyas `.env` en el control de versiones.
+2. **Secreto JWT**: Utiliza un secreto seguro y aleatorio en producción.
+3. **Hashing de contraseñas**: Las contraseñas se cifran mediante bcrypt con 10 rondas de sal.
+4. **CORS**: Configura CORS para dominios frontend específicos.
+5. **Validación**: Todas las entradas se validan mediante class-validator.
+6. **Limitación de velocidad**: Considera implementar la limitación de velocidad en producción.
+7. **HTTPS**: Utiliza HTTPS en producción.
+8. **Base de datos**: Utiliza contraseñas seguras para la base de datos y conexiones cifradas.
 
-## 🚀 Production Deployment
+## Documentación de Swagger
 
-1. **Environment Setup**
-   ```bash
-   # Use strong secrets
-   JWT_SECRET=$(openssl rand -hex 32)
-   ```
+La documentación completa de la API está disponible en `/api/docs` cuando la aplicación está en ejecución.
 
-2. **Build Docker Image**
-   ```bash
-   docker build -t taskflow-backend:latest .
-   ```
-
-3. **Push to Registry**
-   ```bash
-   docker tag taskflow-backend:latest your-registry/taskflow-backend:latest
-   docker push your-registry/taskflow-backend:latest
-   ```
-
-4. **Deploy with Compose** or Kubernetes/ECS
-
-5. **Health Checks**
-   - Backend: `GET /api/docs` (check if Swagger loads)
-   - Database: Health check endpoint in docker-compose
-
-## 📖 Swagger Documentation
-
-Full API documentation is available at `/api/docs` when the application is running.
-
-Features:
-- All endpoints documented
-- Request/response schemas
-- Authentication setup
-- Try-it-out functionality
-
-## 🤝 Contributing
-
-1. Follow SOLID principles
-2. Keep controllers thin, business logic in services
-3. Use meaningful commit messages
-4. Write tests for new features
-5. Maintain clean code with proper linting
-
-## 📄 License
-
-UNLICENSED
-
-## 📞 Support
-
-For issues and questions, please create an issue in the repository.
-
----
-
-**Happy coding! 🎉**
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
-
-## Description
-
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
-
-## Project setup
-
-```bash
-$ pnpm install
-```
-
-## Compile and run the project
-
-```bash
-# development
-$ pnpm run start
-
-# watch mode
-$ pnpm run start:dev
-
-# production mode
-$ pnpm run start:prod
-```
-
-## Run tests
-
-```bash
-# unit tests
-$ pnpm run test
-
-# e2e tests
-$ pnpm run test:e2e
-
-# test coverage
-$ pnpm run test:cov
-```
-
-## Deployment
-
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
-
-```bash
-$ pnpm install -g @nestjs/mau
-$ mau deploy
-```
-
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
-
-## Resources
-
-Check out a few resources that may come in handy when working with NestJS:
-
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+Características:
+- Todos los endpoints documentados
+- Esquemas de solicitud/respuesta
+- Configuración de autenticación
+- Funcionalidad de prueba
