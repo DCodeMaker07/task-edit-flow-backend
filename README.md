@@ -1,19 +1,19 @@
 # TaskFlow Pro - Backend API
 
-A production-ready task management system API built with NestJS, PostgreSQL, and Prisma ORM.
+Una API de sistema de gestión de tareas lista para producción, construida con NestJS, PostgreSQL y Prisma ORM.
 
 ## Caracteristicas
 
-- ✅ **JWT Authentication** - Secure token-based authentication
-- ✅ **Role-Based Access Control** - ADMIN, PROJECT_MANAGER, DEVELOPER roles
-- ✅ **Modular Architecture** - Clean, scalable, and maintainable code
-- ✅ **RESTful API** - Well-structured endpoints with versioning
-- ✅ **Database** - PostgreSQL with Prisma ORM
-- ✅ **Validation** - DTOs with class-validator and class-transformer
-- ✅ **Error Handling** - Comprehensive exception handling with standardized responses
-- ✅ **Swagger Documentation** - Auto-generated API documentation
-- ✅ **Docker Support** - Production-ready Dockerfile and docker-compose
-- ✅ **Seed Data** - Pre-populated database with test users and projects
+- **Autenticación JWT** - Autenticación segura basada en tokens
+- **Control de acceso basado en roles** - Roles de ADMINISTRADOR, GERENTE DE PROYECTO y DESARROLLADOR
+- **Arquitectura modular** - Código limpio, escalable y fácil de mantener
+- **API RESTful** - Puntos finales bien estructurados con control de versiones
+- **Base de datos** - PostgreSQL con Prisma ORM
+- **Validación** - DTOs con validador y transformador de clases
+- **Gestión de errores** - Gestión integral de excepciones con respuestas estandarizadas
+- **Documentación Swagger** - Documentación de API autogenerada
+- **Compatibilidad con Docker** - Dockerfile y docker-compose listos para producción
+- **Datos de prueba** - Base de datos precargada con usuarios y proyectos de prueba
 
 ## Stack Tecnológico
 
