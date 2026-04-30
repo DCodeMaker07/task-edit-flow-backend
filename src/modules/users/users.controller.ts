@@ -14,7 +14,7 @@ import { AuthGuard } from '../../common/guards/auth.guard';
 import { RolesGuard } from '../../common/guards/roles.guard';
 import { Roles } from '../../common/decorators/roles.decorator';
 import { UsersService } from './users.service';
-import { CreateUserDto, UpdateUserDto, UserResponseDto } from './dto/user.dto';
+import { CreateUserDto, FilterUserDto, UpdateUserDto, UserResponseDto } from './dto/user.dto';
 import { UserRole } from 'src/generated/prisma/enums';
 
 @ApiTags('Users')
@@ -22,7 +22,7 @@ import { UserRole } from 'src/generated/prisma/enums';
 @UseGuards(AuthGuard, RolesGuard)
 @ApiBearerAuth()
 export class UsersController {
-  constructor(private usersService: UsersService) {}
+  constructor(private usersService: UsersService) { }
 
   @Post()
   @Roles(UserRole.ADMIN)
@@ -41,15 +41,29 @@ export class UsersController {
   @Roles(UserRole.ADMIN)
   @ApiOperation({ summary: 'Get all users with pagination (Admin only)' })
   @ApiResponse({ status: 200 })
-  async findAll(@Query('page') page?: string, @Query('pageSize') pageSize?: string) {
+  async findAll(
+    @Query('page') page?: string,
+    @Query('pageSize') pageSize?: string,
+    @Query('userRole') userRole?: string
+  ) {
     const pageNum = page ? parseInt(page, 10) : 1;
     const pageSizeNum = pageSize ? parseInt(pageSize, 10) : 10;
 
-    const result = await this.usersService.findAll(pageNum, pageSizeNum);
+    const filters: FilterUserDto = {
+      userRole,
+    }
+
+    const result = await this.usersService.findAll(pageNum, pageSizeNum, filters);
     return {
       success: true,
-      data: result,
+      data: result.data,
       message: 'Users retrieved successfully',
+      meta: {
+        page: result.page,
+        limit: result.pageSize,
+        total: result.total,
+        totalPages: result.totalPages
+      }
     };
   }
 
