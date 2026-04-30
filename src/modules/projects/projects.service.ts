@@ -31,37 +31,42 @@ export class ProjectsService {
     });
   }
 
-  async findAll(page: number = 1, pageSize: number = 10) {
-    const skip = (page - 1) * pageSize;
+  async findAll(page: number, pageSize: number, userId: string, role: string) {
 
-    const [projects, total] = await Promise.all([
-      this.prisma.project.findMany({
-        skip,
-        take: pageSize,
-        include: {
-          owner: {
-            select: {
-              id: true,
-              name: true,
-              email: true,
-            },
+    let where = {};
+
+    if (role === 'PROJECT_MANAGER') {
+      where = { ownerId: userId };
+    }
+
+    if (role === 'DEVELOPER') {
+      where = {
+        tasks: {
+          some: {
+            assignedToId: userId,
           },
         },
-        orderBy: {
-          createdAt: 'desc',
+      };
+    }
+
+    const [data, total] = await Promise.all([
+      this.prisma.project.findMany({
+        where,
+        skip: (page - 1) * pageSize,
+        take: pageSize,
+        include: {
+          tasks: true, // para progreso
         },
       }),
-      this.prisma.project.count(),
+      this.prisma.project.count({ where }),
     ]);
 
-    const totalPages = Math.ceil(total / pageSize);
-
     return {
-      data: projects,
+      data,
       total,
       page,
       pageSize,
-      totalPages,
+      totalPages: Math.ceil(total / pageSize),
     };
   }
 
