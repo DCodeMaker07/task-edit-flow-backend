@@ -264,15 +264,15 @@ pnpm start:prod
 ```
 Admin:
   Email: admin@taskflow.com
-  Password: admin123
+  Password: admin123!
 
 Project Manager:
-  Email: pm@taskflow.com
-  Password: pm123
+  Email: maria@taskflow.com
+  Password: Maria123!
 
 Developer:
-  Email: dev@taskflow.com
-  Password: dev123
+  Email: carlos@taskflow.com
+  Password: Carlos123!
 ```
 
 ## 📚 API formato de respuesta
