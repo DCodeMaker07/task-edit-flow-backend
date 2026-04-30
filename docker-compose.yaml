@@ -1,5 +1,5 @@
 services:
-  employees-db:
+  task-db:
     container_name: taskflow_db
     image: postgres:17.7
     volumes:
