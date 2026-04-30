@@ -11,6 +11,7 @@ import {
   Query,
   Request,
 } from '@nestjs/common';
+import { SkipThrottle } from '@nestjs/throttler';
 import { ApiTags, ApiOperation, ApiBearerAuth, ApiResponse } from '@nestjs/swagger';
 import { AuthGuard } from '../../common/guards/auth.guard';
 import { RolesGuard } from '../../common/guards/roles.guard';
@@ -19,6 +20,7 @@ import { ProjectsService } from './projects.service';
 import { CreateProjectDto, UpdateProjectDto, ProjectResponseDto } from './dto/project.dto';
 import { UserRole } from 'src/generated/prisma/enums';
 
+@SkipThrottle()
 @ApiTags('Projects')
 @Controller('api/v1/projects')
 @UseGuards(AuthGuard, RolesGuard)

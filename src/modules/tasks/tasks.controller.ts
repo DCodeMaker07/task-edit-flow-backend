@@ -10,12 +10,14 @@ import {
   Query,
   Request,
 } from '@nestjs/common';
+import { SkipThrottle } from '@nestjs/throttler';
 import { ApiTags, ApiOperation, ApiBearerAuth, ApiResponse } from '@nestjs/swagger';
 import { AuthGuard } from '../../common/guards/auth.guard';
 import { RolesGuard } from '../../common/guards/roles.guard';
 import { TasksService } from './tasks.service';
 import { CreateTaskDto, UpdateTaskDto, TaskResponseDto, FilterTasksDto } from './dto/task.dto';
 
+@SkipThrottle()
 @ApiTags('Tasks')
 @Controller('api/v1/tasks')
 @UseGuards(AuthGuard, RolesGuard)
