@@ -24,7 +24,7 @@ import { UserRole } from 'src/generated/prisma/enums';
 @UseGuards(AuthGuard, RolesGuard)
 @ApiBearerAuth()
 export class ProjectsController {
-  constructor(private projectsService: ProjectsService) {}
+  constructor(private projectsService: ProjectsService) { }
 
   @Post()
   @Roles(UserRole.ADMIN, UserRole.PROJECT_MANAGER)
@@ -49,15 +49,31 @@ export class ProjectsController {
   @Get()
   @ApiOperation({ summary: 'Get all projects with pagination' })
   @ApiResponse({ status: 200 })
-  async findAll(@Query('page') page?: string, @Query('pageSize') pageSize?: string) {
+  async findAll(
+    @Query('page') page?: string,
+    @Query('pageSize') pageSize?: string,
+    @Request() req?: any,
+  ) {
     const pageNum = page ? parseInt(page, 10) : 1;
     const pageSizeNum = pageSize ? parseInt(pageSize, 10) : 10;
 
-    const result = await this.projectsService.findAll(pageNum, pageSizeNum);
+    const result = await this.projectsService.findAll(
+      pageNum,
+      pageSizeNum,
+      req.user.id,
+      req.user.role
+    );
+
     return {
       success: true,
-      data: result,
+      data: result.data,
       message: 'Projects retrieved successfully',
+      meta: {
+        page: result.page,
+        limit: result.pageSize,
+        total: result.total,
+        totalPages: result.totalPages,
+      },
     };
   }
 

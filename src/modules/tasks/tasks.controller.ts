@@ -21,7 +21,20 @@ import { CreateTaskDto, UpdateTaskDto, TaskResponseDto, FilterTasksDto } from '.
 @UseGuards(AuthGuard, RolesGuard)
 @ApiBearerAuth()
 export class TasksController {
-  constructor(private tasksService: TasksService) {}
+  constructor(private tasksService: TasksService) { }
+
+  @Get('stats')
+  @ApiOperation({ summary: 'Get tasks stats grouped by status' })
+  @ApiResponse({ status: 200 })
+  async getStats(@Request() req: any) {
+    
+    const stats = await this.tasksService.getStats(req.user.id);
+    return {
+      success: true,
+      data: stats,
+      message: 'Task stats retrieved successfully',
+    };
+  }
 
   @Post()
   @ApiOperation({ summary: 'Create a new task' })
@@ -65,8 +78,14 @@ export class TasksController {
     const result = await this.tasksService.findAll(pageNum, pageSizeNum, filters);
     return {
       success: true,
-      data: result,
+      data: result.data,
       message: 'Tasks retrieved successfully',
+      meta: {
+        page: result.page,
+        limit: result.pageSize,
+        total: result.total,
+        totalPages: result.totalPages
+      }
     };
   }
 
@@ -144,4 +163,7 @@ export class TasksController {
       message: 'Task deleted successfully',
     };
   }
+
+
+
 }
