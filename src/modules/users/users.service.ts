@@ -5,7 +5,7 @@ import {
 } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import { PrismaService } from 'src/prisma.service';
-import { CreateUserDto, UpdateUserDto } from './dto/user.dto';
+import { CreateUserDto, FilterUserDto, UpdateUserDto } from './dto/user.dto';
 
 @Injectable()
 export class UsersService {
@@ -35,12 +35,19 @@ export class UsersService {
     });
   }
 
-  async findAll(page: number = 1, pageSize: number = 10) {
+  async findAll(page: number = 1, pageSize: number = 10, filters?: FilterUserDto) {
     const skip = (page - 1) * pageSize;
+
+    const where: any = {};
+
+    if(filters?.userRole) {
+      where.role = filters.userRole;
+    }
 
     const [users, total] = await Promise.all([
       this.prisma.user.findMany({
         skip,
+        where,
         take: pageSize,
         select: {
           id: true,
