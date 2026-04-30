@@ -30,19 +30,19 @@ export const seedUsers: SeedUser[] = [
   {
     email: "admin@taskflow.com",
     name: "Admin User",
-    password: "123456",
+    password: "Admin123!",
     role: UserRole.ADMIN,
   },
   {
-    email: "pm@taskflow.com",
+    email: "maria@taskflow.com",
     name: "Project Manager",
-    password: "123456",
+    password: "Maria123!",
     role: UserRole.PROJECT_MANAGER,
   },
   {
-    email: "dev@taskflow.com",
+    email: "carlos@taskflow.com",
     name: "Developer User",
-    password: "123456",
+    password: "Carlos123!",
     role: UserRole.DEVELOPER,
   },
 ];
