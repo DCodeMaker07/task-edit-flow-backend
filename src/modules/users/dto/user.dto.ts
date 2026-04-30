@@ -8,6 +8,12 @@ import {
 import { Transform, Type } from 'class-transformer';
 import { UserRole } from 'src/generated/prisma/enums';
 
+export class FilterUserDto {
+  @IsOptional()
+  @IsString()
+  userRole?: string;
+}
+
 export class CreateUserDto {
   @IsString()
   @IsEmail()
