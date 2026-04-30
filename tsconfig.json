@@ -17,7 +17,7 @@
     "allowSyntheticDefaultImports": true,
     "target": "ES2023",
     "sourceMap": true,
-    "rootDir": "./src",
+    "rootDir": ".",
     "outDir": "./dist",
     "baseUrl": "./",
     "ignoreDeprecations": "6.0",
@@ -34,6 +34,7 @@
   },
   "include": [
     "src/**/*",
+    "test/**/*" 
   ],
   "exclude": [
     "node_modules",
