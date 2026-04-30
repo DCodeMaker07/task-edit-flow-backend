@@ -329,4 +329,33 @@ export class TasksService {
       totalPages,
     };
   }
+
+  async getStats(userId: string) {
+    const result = await this.prisma.task.groupBy({
+      by: ['status'],
+      _count: {
+        status: true,
+      },
+      where: {
+        assignedTo: {
+          id: userId
+        },
+      },
+    });
+    console.log(result)
+
+    // Salida formateada
+    const stats = {
+      TODO: 0,
+      IN_PROGRESS: 0,
+      IN_REVIEW: 0,
+      DONE: 0,
+    };
+
+    result.forEach((item) => {
+      stats[item.status] = item._count.status;
+    });
+
+    return stats;
+  }
 }
